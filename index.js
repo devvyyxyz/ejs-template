@@ -1,33 +1,28 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-// setup the main directory
-app.use(express.static(__dirname + '/views'));
+// Serve static assets from the public directory
+app.use(express.static(__dirname + '/public'));
 
-// set the view engine to ejs
+// Set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// use res.render to load up an ejs view file
-// use res.redirect to redirect to another link
-
-
-
-
-// pages
+// Render the home page
 app.get('/', function(req, res) {
   res.render('pages/index');
 });
 
-
-// hyperlinks
+// Redirect to Discord
 app.get('/discord', function(req, res) {
   res.redirect('https://discord.gg/TvFPYJRdgt');
 });
 
-// 404 page
+// Handle 404s
 app.get('*', function(req, res) {
   res.status(404).render('pages/404');
 });
 
-app.listen(8080);
-console.log('Server is listening on port 8080');
+const port = process.env.PORT || 8080;
+app.listen(port, function() {
+  console.log(`Server is listening on port ${port}`);
+});
